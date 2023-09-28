@@ -61,6 +61,7 @@ public class HelloApplication extends Application {
     public Button unitButton = new Button();
     final NumberAxis xAxis = new NumberAxis();
     final NumberAxis yAxis = new NumberAxis();
+    public static int counter = 0;
 
     public static List<Double> xPoints = new ArrayList<>();
     private ScheduledExecutorService executorService;
@@ -87,14 +88,14 @@ public class HelloApplication extends Application {
         xAxis.setAutoRanging(false);
         xAxis.setAnimated(false);
         xAxis.setForceZeroInRange(true);
-        xAxis.setLowerBound(-300.0);
-        xAxis.setUpperBound(0.0);
+        xAxis.setLowerBound(0.0);
+        xAxis.setUpperBound(60.00);
         yAxis.setAutoRanging(false);
         yAxis.setAnimated(false);
         yAxis.setForceZeroInRange(true);
         yAxis.setTickUnit(5.0);
-        yAxis.setLowerBound(50.0);
-        yAxis.setUpperBound(122.0);
+        yAxis.setLowerBound(10.0);
+        yAxis.setUpperBound(50.0);
         yAxis.setSide(Side.RIGHT);
         //line chart
         final LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
@@ -130,33 +131,41 @@ public class HelloApplication extends Application {
                     xPoints.remove(0);
                 }
                 String ttemp;
-                Double dtemp = 22.0;
+                Double dtemp = -200.00;
                 try {
                     ttemp = buffer.getThisData();
-                    dtemp = Double.parseDouble(ttemp);
+                    if(ttemp != ""){
+                        dtemp = Double.parseDouble(ttemp);
+                    }
+                    //System.out.println(dtemp);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                if (!isCelsius) {
-                    double val = (1.8) * dtemp + 32.0;
-                    val = val * 100;
-                    val = Math.round(val);
-                    dtemp = val / 100;
+                if(dtemp != -200.00){
+                    if (!isCelsius) {
+                        double val = (1.8) * dtemp + 32.0;
+                        val = val * 100;
+                        val = Math.round(val);
+                        dtemp = val / 100;
+                    }
+                    //int l = series.getData().size();
+                    //series.getData().clear();
+                    if ((ttemp.contains("85")) || (ttemp.contains("-127"))) {
+                        info.setText("Temperature: NO DATA PROVIDED");
+                        series.getData().add(new XYChart.Data<>(counter, -200.0));
+                        xPoints.add(-200.0);
+                    } else {
+                        series.getData().add(new XYChart.Data<>(counter, dtemp));
+                        xPoints.add(dtemp);
+                        info.setText("Temperature: " + xPoints.get(xPoints.size() - 1).toString() + UNIT);
+                    }
+                    if(counter > 60.00){
+                        xAxis.setLowerBound(0.0 + counter - 60.00);
+                        xAxis.setUpperBound(counter);
+                    }
+                    counter++;
+                    alertSMS();
                 }
-                int l = series.getData().size();
-                series.getData().clear();
-                for (int i = 1; i < l; i++) {
-                    series.getData().add(new XYChart.Data<>(1 * (l-1), xPoints.get(i)));
-                }
-                if ((ttemp.contains("85"))||(ttemp.contains("-127"))) {
-                    info.setText("Temperature: NO DATA PROVIDED");
-                    series.getData().add(new XYChart.Data<>(0,-200.0));
-                    xPoints.add(-200.0);
-                } else {
-                    series.getData().add(new XYChart.Data<>(0, dtemp));
-                    info.setText("Temperature: " + xPoints.get(xPoints.size()-1).toString() + UNIT);
-                }
-                alertSMS();
             });
         }, 0, 1, TimeUnit.SECONDS);
         flow.setVgap(10.0);
@@ -236,7 +245,7 @@ public class HelloApplication extends Application {
     public void sendSMS(String args, String alert) {
         Twilio.init("AC8799b701835fb95790acd7adc35bb3da", "f915fa8cc761a899fc59db72f1fcaa2f");
 
-        Message sms = Message.creator(new com.twilio.type.PhoneNumber("+12145663422"), "+1"+args, alert).create();
+        Message sms = Message.creator(new com.twilio.type.PhoneNumber("+12145663422"), new com.twilio.type.PhoneNumber("+1"+args), alert).create();
         System.out.println(sms.getSid());
     }
 

@@ -20,9 +20,11 @@ public class BufferReader {
 
     public static String getThisData() throws IOException{
         String s;
-        String tempStr = "0.0";
+        String tempStr = "";
         while ((s = br.readLine()) != null){
-            tempStr = s;
+            if(s.length() != 0){
+                tempStr = s;
+            }
         }
         return tempStr;
     }
