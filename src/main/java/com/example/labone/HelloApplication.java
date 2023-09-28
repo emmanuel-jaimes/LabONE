@@ -87,8 +87,8 @@ public class HelloApplication extends Application {
         xAxis.setAutoRanging(false);
         xAxis.setAnimated(false);
         xAxis.setForceZeroInRange(true);
-        xAxis.setLowerBound(-300.0);
-        xAxis.setUpperBound(0.0);
+        xAxis.setLowerBound(0.0);
+        xAxis.setUpperBound(300.0);
         yAxis.setAutoRanging(false);
         yAxis.setAnimated(false);
         yAxis.setForceZeroInRange(true);
@@ -145,8 +145,8 @@ public class HelloApplication extends Application {
                 }
                 int l = series.getData().size();
                 series.getData().clear();
-                for (int i = 0; i < l; i++) {
-                    series.getData().add(new XYChart.Data<>(-1 * (l-1), xPoints.get(i)));
+                for (int i = 1; i < l; i++) {
+                    series.getData().add(new XYChart.Data<>(1 * (l-1), xPoints.get(i)));
                 }
                 if ((ttemp.contains("85"))||(ttemp.contains("-127"))) {
                     info.setText("Temperature: NO DATA PROVIDED");
@@ -234,9 +234,9 @@ public class HelloApplication extends Application {
 
     //twilio send message service
     public void sendSMS(String args, String alert) {
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Twilio.init("AC8799b701835fb95790acd7adc35bb3da", "f915fa8cc761a899fc59db72f1fcaa2f");
 
-        Message sms = Message.creator(new PhoneNumber("+1" + args), new PhoneNumber(ACCOUNT_PHONE), alert).create();
+        Message sms = Message.creator(new PhoneNumber("+1" + args), new com.twilio.type.PhoneNumber(ACCOUNT_PHONE), alert).create();
         System.out.println(sms.getSid());
     }
 
