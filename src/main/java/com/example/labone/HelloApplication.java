@@ -89,7 +89,7 @@ public class HelloApplication extends Application {
         xAxis.setAnimated(false);
         xAxis.setForceZeroInRange(true);
         xAxis.setLowerBound(0.0);
-        xAxis.setUpperBound(60.00);
+        xAxis.setUpperBound(300.00);
         yAxis.setAutoRanging(false);
         yAxis.setAnimated(false);
         yAxis.setForceZeroInRange(true);
@@ -159,8 +159,8 @@ public class HelloApplication extends Application {
                         xPoints.add(dtemp);
                         info.setText("Temperature: " + xPoints.get(xPoints.size() - 1).toString() + UNIT);
                     }
-                    if(counter > 60.00){
-                        xAxis.setLowerBound(0.0 + counter - 60.00);
+                    if(counter > 300.00){
+                        xAxis.setLowerBound(0.0 + counter - 300.00);
                         xAxis.setUpperBound(counter);
                     }
                     counter++;
