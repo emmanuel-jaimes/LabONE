@@ -62,7 +62,7 @@ public class HelloApplication extends Application {
     final NumberAxis xAxis = new NumberAxis();
     final NumberAxis yAxis = new NumberAxis();
 
-    List<Double> xPoints = new ArrayList<>();
+    public static List<Double> xPoints = new ArrayList<>();
     private ScheduledExecutorService executorService;
     private BufferReader buffer = new BufferReader();
 
@@ -119,6 +119,7 @@ public class HelloApplication extends Application {
         minUpdate.setPromptText("Enter new min value in F");
         maxUpdate.setPromptText("Enter new max value in F");
         phoneUpdate.setPromptText("Enter new phone number");
+        xPoints.add(21.00);
 
         ScheduledExecutorService executorService1;
         executorService1 = Executors.newSingleThreadScheduledExecutor();
@@ -131,11 +132,11 @@ public class HelloApplication extends Application {
                 String ttemp;
                 Double dtemp = 22.0;
                 try {
-                    ttemp = buffer.getMostRecentData();
+                    ttemp = buffer.getThisData();
+                    dtemp = Double.parseDouble(ttemp);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                dtemp = Double.parseDouble(ttemp);
                 if (!isCelsius) {
                     double val = (1.8) * dtemp + 32.0;
                     val = val * 100;
