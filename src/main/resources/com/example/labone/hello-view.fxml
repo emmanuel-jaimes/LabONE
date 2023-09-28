@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" minHeight="450.0" minWidth="400.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx" fx:controller="com.example.labone.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <LineChart fx:id="lineChart" legendSide="TOP" title="Temperature Overview">
+        <xAxis>
+          <CategoryAxis label="Time ago (s)" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="degreeLabel" label="Temperature " side="RIGHT" />
+        </yAxis>
+      </LineChart>
+      <Button fx:id="cDegrees" mnemonicParsing="false" onAction="#cButtonClick" text="Celsius" />
+      <Button fx:id="fDegrees" mnemonicParsing="false" onAction="#fButtonClick" text="Fahrenheit" />
+   </children>
+</VBox>
