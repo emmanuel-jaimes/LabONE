@@ -87,8 +87,8 @@ public class HelloApplication extends Application {
         xAxis.setAutoRanging(false);
         xAxis.setAnimated(false);
         xAxis.setForceZeroInRange(true);
-        xAxis.setLowerBound(0.0);
-        xAxis.setUpperBound(300.0);
+        xAxis.setLowerBound(-300.0);
+        xAxis.setUpperBound(0.0);
         yAxis.setAutoRanging(false);
         yAxis.setAnimated(false);
         yAxis.setForceZeroInRange(true);
@@ -164,7 +164,7 @@ public class HelloApplication extends Application {
         layout.setCenter(lineChart);
         layout.setLeft(flow);
         layout.setTop(info);
-        Scene scene = new Scene(layout, 1000, 1000);
+        Scene scene = new Scene(layout, 1000, 750);
         stage.setScene(scene);
         stage.show();
     }
@@ -236,7 +236,7 @@ public class HelloApplication extends Application {
     public void sendSMS(String args, String alert) {
         Twilio.init("AC8799b701835fb95790acd7adc35bb3da", "f915fa8cc761a899fc59db72f1fcaa2f");
 
-        Message sms = Message.creator(new PhoneNumber("+1" + args), new com.twilio.type.PhoneNumber(ACCOUNT_PHONE), alert).create();
+        Message sms = Message.creator(new com.twilio.type.PhoneNumber("+12145663422"), "+1"+args, alert).create();
         System.out.println(sms.getSid());
     }
 
