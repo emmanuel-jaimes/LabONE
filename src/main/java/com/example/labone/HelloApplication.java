@@ -197,7 +197,7 @@ public class HelloApplication extends Application {
             yAxis.setLowerBound(50.0);
             yAxis.setUpperBound(122.0);
 
-            for (int i = 0; i < xPoints.size(); i++) {
+            for (int i = 0; i < counter; i++) {
                 double val = (1.8) * xPoints.get(i) + 32;
                 val = val * 100;
                 val = Math.round(val);
@@ -221,7 +221,7 @@ public class HelloApplication extends Application {
             yAxis.setUpperBound(50);
             yAxis.setLabel("Temperatre (C)");
 
-            for (int i = 0; i < xPoints.size(); i++) {
+            for (int i = 0; i < counter; i++) {
                 double val = (5.0/9.0) * (xPoints.get(i) - 32.0);
                 val = val * 100;
                 val = Math.round(val);
