@@ -35,8 +35,8 @@ void setup(void)
 void loop() {
   delay(1000); // Sets one second interval
   
-  reqTemp();
-  while(digitalRead(7) == HIGH){
+  reqTemp(); // Reads the temperature, regardless of button
+  while(digitalRead(7) == HIGH){ // Checks if button is pressed, which indicated the LCD should display
     if(therm.getTempCByIndex(0) == -127){ // Checks if Sensor isn't receiving data
       printLCD(err, noSens); // Prints "Error No Sensor Found" to LCD
     }
@@ -46,23 +46,23 @@ void loop() {
       
       printLCD(celc,fahr); // Prints the Celcius and Fahrenheit Temperatures to the LCD
       Serial.print("\n" + String(therm.getTempCByIndex(0)));
-      BTSerial.print("\n" + String(therm.getTempCByIndex(0)));
+      BTSerial.print("\n" + String(therm.getTempCByIndex(0))); // Sends data over the HC-06 device
     }
   }
   Serial.print("\n" + String(therm.getTempCByIndex(0)));
-  BTSerial.print("\n" + String(therm.getTempCByIndex(0)));
+  BTSerial.print("\n" + String(therm.getTempCByIndex(0))); // Sends data over the HC-06 device
   lcd.clear();
 }
 
 void printLCD(String s1, String s2){ // Prints to LCD line by line
-  lcd.setCursor(0,0);
+  lcd.setCursor(0,0); // Top line of 16x2 LCD
   lcd.print(s1);
-  lcd.setCursor(0,1);
+  lcd.setCursor(0,1); // Bottom Line
   lcd.print(s2);
 }
 
-void reqTemp() {
-  therm.setWaitForConversion(false);
+void reqTemp() { // Method to get temperatures from the DS18B20 temperature sensor
+  therm.setWaitForConversion(false); // Enables asynchronous temperature requests
   therm.requestTemperatures();
   therm.setWaitForConversion(true);
 }
